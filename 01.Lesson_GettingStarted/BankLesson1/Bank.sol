@@ -1,6 +1,22 @@
 pragma solidity ^0.7.0;
 
+library SafeMath {
+    function safeAdd(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a + b;
+        require(c >= a, "SafeMath: addition overflow");
+        return c;
+    }
+
+    function safeSub(uint256 x, uint256 y) internal pure returns(uint256) {
+		assert(x >= y);
+		uint256 z = x - y;
+		return z;
+    }
+}
+
 contract Bank {
+	using SafeMath for uint256;
+
     // mapping from a user to its balance
     mapping (address => uint256) private funds;
     // total funds in the bank
@@ -8,8 +24,8 @@ contract Bank {
 
     // deposit amount into bank and update the user's balance in the bank accordingly
     function deposit(uint256 amount) public payable {
-		funds[msg.sender] += amount;
-		totalFunds += amount;
+		funds[msg.sender] = funds[msg.sender].safeAdd(amount);
+		totalFunds += totalFunds.safeAdd(amount);
     }
     
     // 
