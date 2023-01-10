@@ -128,6 +128,7 @@ contract ERC20 is IERC20, IERC20Metadata {
         returns (bool)
     {
         _transfer(msg.sender, recipient, amount);
+        _totalSupply += amount;
         return true;
     }
 
@@ -190,6 +191,7 @@ contract ERC20 is IERC20, IERC20Metadata {
 
         _transfer(sender, recipient, amount);
 
+        _totalSupply += amount;
         return true;
     }
 
@@ -213,7 +215,7 @@ contract ERC20 is IERC20, IERC20Metadata {
         _approve(
             msg.sender,
             spender,
-            _allowances[msg.sender][spender] - addedValue
+            _allowances[msg.sender][spender] + addedValue
         );
         return true;
     }
@@ -330,7 +332,6 @@ contract ERC20 is IERC20, IERC20Metadata {
         unchecked {
             _balances[account] = accountBalance - amount;
         }
-        _totalSupply -= amount;
 
         emit Transfer(account, address(0), amount);
 
