@@ -14,7 +14,7 @@ pragma solidity ^0.8.7;
  * organizer's order, and the num of participants are nullified.
  *
  * - At this point a meeting can be started by anybody if start time has arrived (change to STARTED),
- * or be cancelled (change to CANCELLED) by owner. A meeting that has already occured can not be labeld CANCELLED.
+ * or be cancelled (change to CANCELLED) by owner. A meeting that has already occured can not be labeled CANCELLED.
  *
  * - In case that the meeting has already started and the end time arrived, anybody can change the status
  * to ENDED.
