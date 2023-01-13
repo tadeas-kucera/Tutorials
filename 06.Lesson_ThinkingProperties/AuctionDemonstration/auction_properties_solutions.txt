@@ -1,0 +1,29 @@
+Valid state of the AuctionStrcut:
+ * `bid_expiry` not greater than `end_time`
+
+Variable Transition
+ * For each function, the prize of given auction cannot increase
+ * The prize of give auction can only decrease for function bid
+ * Whenever auction winner is changed, the prize is also 
+ * totalSupply only increases
+
+
+ * newAuction function does not delete any auction (the number of auctions is increased)
+ * number of auctions does not increase for any other function
+ * number of auctions can decrease only for close function
+ * When closing an unknown auction, nothings happens (the number of auctions stays the same)
+ * When closing a known auction, the number of auctions decrease
+ * You cannot
+
+
+High Level
+ * When bid is called, the transferTo(current winner, new winner) is called
+
+UNIT TESTS
+ * mint adds amount to `who` and total
+ * When transferTo(to, amount) is called, the balance of `to` is increased by amount and the balance of caller is decreased by amount.
+
+
+Q: Should we also handle scenarios like:
+ * When closing an unknown auction, nothings happens
+ * The getAuction function returns ???? None? when given unknown auction
