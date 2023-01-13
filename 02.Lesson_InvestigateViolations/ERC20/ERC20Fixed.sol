@@ -183,7 +183,11 @@ contract ERC20 is IERC20, IERC20Metadata {
         require(
             currentAllowance >= amount,
             "ERC20: transfer amount exceeds allowance"
-        ); 
+        );
+        require(
+            currentAllowance >= currentAllowance - amount,
+            "allowance does not underflow"
+        );
         unchecked {
             _approve(sender, msg.sender, currentAllowance - amount);
         }
