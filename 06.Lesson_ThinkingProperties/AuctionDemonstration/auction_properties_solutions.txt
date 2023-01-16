@@ -27,3 +27,27 @@ UNIT TESTS
 Q: Should we also handle scenarios like:
  * When closing an unknown auction, nothings happens
  * The getAuction function returns ???? None? when given unknown auction
+
+Aftermath:
+
+ - First we should define states of the whole system (not one auction, the whole system):
+     - defNonCreated defined as `auctions[id].end_time` is 0.
+     - defCreated defined as `auctions[id].end_time` is not 0.
+ - Then the properties:
+    VALID STATE
+     - defNonCreated => getAuction is const function returning 0.
+     - defCreated => auctions[id].winner != 0 for any id.
+    VARIABLE Transition
+     - defCreated => auctions[id].bid_expiry cannot decrease.
+     - balanceOf(auctions[id].winner) was increased =>
+         => user == auctions[id].winner && close() was called
+     - If a method f was called in defCreated state and getAuction(id) returns all 0's =>
+         => f == close
+    HIGH LEVEL
+     - Cannot delete an auction if
+         auctions[id].bid_expiry == 0 or
+         (auctions[id].bid_expiry >= now || auctions[id].end_time >= now)
+     - Solvency - Total supply of tokens is greater or equal to the sum of balances of all users.
+    UNIT TESTS
+     - mint correctly increases balances and totalSupply
+     - transferTo correctly increases balances[rec] and decreases balances[msf.sender]
